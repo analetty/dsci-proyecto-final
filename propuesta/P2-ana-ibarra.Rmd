@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introducción
+Este proyecto tiene como objetivo ....
 
 ## Justificación del tema
 
