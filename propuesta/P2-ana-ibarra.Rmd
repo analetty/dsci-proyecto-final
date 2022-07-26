@@ -1,0 +1,24 @@
+---
+title: 'Inflación y Gasto Público'
+subtitle: 'Países latinoamericanos miembros de la OCDE'
+author: 
+  - Ana Gabriela Ibarra
+  - Ana Leticia Ibarra
+  - Angelo Mazzoca
+  - Reysbel Ramos
+  - Sinai Suarez
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introducción
+
+## Justificación del tema
+
+## Descripción de los datos
+
+## Metodología a usar
