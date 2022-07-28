@@ -52,7 +52,7 @@ Estaremos analizando las siguientes variables de los países Colombia, Chile, Co
 - Gasto público expresados en miles de millones en moneda local.
 - Indice de inflación.
 - Tasa implícita del PPA.
-- Prueba
+
 
 
 ## Metodología
