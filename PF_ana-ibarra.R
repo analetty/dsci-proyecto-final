@@ -100,6 +100,10 @@ reg_ipc_gasto <- lm(ipc~gasto_dolares, clean_data)
 lm1 <- clean_data %>% filter(Country == 'Chile') %>% 
   lm(ipc~gasto_dolares, data =.)
 
+lm1pc <-  clean_data_pob %>% filter(Country == 'Chile') %>% 
+  lm(ipc~gastopc, data =.)
+
+
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.5658
 
 
@@ -107,6 +111,9 @@ lm1 <- clean_data %>% filter(Country == 'Chile') %>%
 
 lm2 <- clean_data %>% filter(Country == 'Colombia') %>% 
   lm(ipc~gasto_dolares, data =.)
+
+lm2pc <-  clean_data_pob %>% filter(Country == 'Colombia') %>% 
+  lm(ipc~gastopc, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.3984
 
@@ -117,6 +124,10 @@ lm2 <- clean_data %>% filter(Country == 'Colombia') %>%
 lm3 <- clean_data %>% filter(Country == 'Costa Rica') %>% 
   lm(ipc~gasto_dolares, data =.)
 
+lm3pc <-  clean_data_pob %>% filter(Country == 'Costa Rica') %>% 
+  lm(ipc~gastopc, data =.)
+
+
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 4.674
 # IPC más sensible al gasto
 
@@ -125,9 +136,14 @@ lm3 <- clean_data %>% filter(Country == 'Costa Rica') %>%
 lm4 <- clean_data %>% filter(Country == 'Mexico') %>% 
   lm(ipc~gasto_dolares, data =.)
 
+lm4pc <-  clean_data_pob %>% filter(Country == 'Mexico') %>% 
+  lm(ipc~gastopc, data =.)
+
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.1574
 
-# Tabla de regresiones
+# Tabla de regresiones 
+  
+# Tabla regresion IPC ~ Gasto en USD
 msummary(list("Regional"= reg_ipc_gasto,
               "Chile"= lm1,
               "Colombia"=lm2, 
@@ -137,7 +153,19 @@ msummary(list("Regional"= reg_ipc_gasto,
          stars = c('*' = .1, '**' = .05, '***' = .01),
          gof_map= modelsummary::gof_map %>%
            filter(raw=="nobs"|raw=="r.squared"))
-           
+
+# Tabla regresion  IPC ~ Gasto per capita en USD
+
+msummary(list("Regional"= reg_ipc_gastopc,
+              "Chile"= lm1pc,
+              "Colombia"=lm2pc, 
+              "Costa Rica"= lm3pc, 
+              "México" = lm4pc), 
+         vcov = 'robust',
+         stars = c('*' = .1, '**' = .05, '***' = .01),
+         gof_map= modelsummary::gof_map %>%
+           filter(raw=="nobs"|raw=="r.squared"))
+
 # En un gráfico veremos más a detalle el tema del COVID
 
 
