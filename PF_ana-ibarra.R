@@ -30,7 +30,7 @@ getwd()
 
 # Importamos los datasets a usar
 
-setwd('dsci-proyecto-final/datasets')
+#setwd('DSci-ALIL/proyecto/dsci-proyecto-final/datasets')
 
 raw_data <- read_excel("WEO_Data.xlsx")
 
@@ -57,7 +57,7 @@ data1 <- data %>%
 clean_data <- pivot_wider(data1,names_from='descriptor', values_from='obs') %>%
   mutate(gasto_ml = str_replace_all(gasto_ml, "[,.]", ""),
          ppp = str_replace_all(ppp, "[,.]", ""),) %>%
-  transform(
+  transform(Country = as.factor(Country),
             Ano = as.double(Ano),
             ppp = as.numeric(ppp),
             ipc = as.numeric(ipc),
@@ -120,6 +120,9 @@ reg_ipc_gasto_mex <- lm(ipc~gasto_dolares, cd_mexico)
 #   ggplot(aes(Ano, gasto_dolares, color = as.factor(Country), group = 1)) + 
 #   geom_line() + ggtitle("Gasto (%PIB) de los Paises OCDE en LATAM")
 
+gasto_grf <- clean_data %>%
+  ggplot(aes(Ano, gasto_dolares, color = Country)) + 
+  geom_line() + ggtitle("Gasto de los Paises OCDE en LATAM")
 
 # Para Chile
 
