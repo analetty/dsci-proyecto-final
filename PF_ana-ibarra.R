@@ -211,7 +211,7 @@ dataWorld <- World %>%
 
 a1 <- clean_data %>% 
   filter(Ano == 1990) %>% 
-  mutate(gastopc = gasto_dolares / poblacion)
+  mutate(gastopc = gasto_dolares / poblacion * 10^3)
 
 plotuno <- left_join(dataWorld, a1) 
 
@@ -219,10 +219,154 @@ plotuno <- left_join(dataWorld, a1)
 
 tmap_mode("plot") 
 
-  tm_shape(plotuno) +
+  p1 <- tm_shape(plotuno) +
   tm_borders(alpha = 0.4) + 
-  tm_polygons("gastopc", style = 'quantile', n=5,
+  tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
               title = "Gasto pc en USD", colorNA = NULL) +
-  tm_layout(main.title = "Gasto per cápita en 1990",
+  tm_layout(main.title = "1990",
             main.title.position = "center",
-            main.title.size = 1)
+            main.title.size = 3, 
+            legend.show = F, 
+            frame = F)
+
+  a2 <- clean_data %>% 
+    filter(Ano == 1995) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plotdos <- left_join(dataWorld, a2) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p2 <- tm_shape(plotdos) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "1995",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
+  
+  a3 <- clean_data %>% 
+    filter(Ano == 2000) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plottres <- left_join(dataWorld, a3) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p3 <- tm_shape(plottres) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "2000",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
+  
+  
+  a4 <- clean_data %>% 
+    filter(Ano == 2005) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plotcuatro <- left_join(dataWorld, a4) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p4 <- tm_shape(plotcuatro) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "2005",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
+  
+  a5 <- clean_data %>% 
+    filter(Ano == 2010) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plotcinco <- left_join(dataWorld, a5) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p5 <- tm_shape(plotcinco) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "2010",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
+  
+  a6 <- clean_data %>% 
+    filter(Ano == 2015) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plotseis <- left_join(dataWorld, a6) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p6 <- tm_shape(plotseis) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "2015",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
+  
+  
+  a7 <- clean_data %>% 
+    filter(Ano == 2020) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plotsiete <- left_join(dataWorld, a7) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p7 <- tm_shape(plotsiete) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "2020",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
+  
+  a8 <- clean_data %>% 
+    filter(Ano == 2021) %>% 
+    mutate(gastopc = gasto_dolares / poblacion * 10^3)
+  
+  plotocho <- left_join(dataWorld, a8) 
+  
+  
+  
+  tmap_mode("plot") 
+  
+  p8 <- tm_shape(plotocho) +
+    tm_borders(alpha = 0.4) + 
+    tm_fill("gastopc", breaks= c(800, 1300, 1800, 2300, 2800,3300, 3800, 4300, 4800, 5300, 5800, 6300, 6800, 7300, 7800, 8300, 8800),
+            title = "Gasto pc en USD", colorNA = NULL) +
+    tm_layout(main.title = "2021",
+              main.title.position = "center",
+              main.title.size = 3, 
+              legend.show = F, 
+              frame = F)
