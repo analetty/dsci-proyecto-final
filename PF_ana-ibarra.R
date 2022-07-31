@@ -97,7 +97,7 @@ reg_ipc_gasto <- lm(ipc~gasto_dolares, clean_data)
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.06546
 
 # Para Chile
-clean_data %>% filter(Country == 'Chile') %>% 
+lm1 <- clean_data %>% filter(Country == 'Chile') %>% 
   lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.5658
@@ -105,7 +105,7 @@ clean_data %>% filter(Country == 'Chile') %>%
 
 # Para Colombia
 
-clean_data %>% filter(Country == 'Colombia') %>% 
+lm2 <- clean_data %>% filter(Country == 'Colombia') %>% 
   lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.3984
@@ -114,7 +114,7 @@ clean_data %>% filter(Country == 'Colombia') %>%
 
 # Para Costa Rica
 
-clean_data %>% filter(Country == 'Costa Rica') %>% 
+lm3 <- clean_data %>% filter(Country == 'Costa Rica') %>% 
   lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 4.674
@@ -122,11 +122,22 @@ clean_data %>% filter(Country == 'Costa Rica') %>%
 
 
 # Para Mexico
-clean_data %>% filter(Country == 'Mexico') %>% 
+lm4 <- clean_data %>% filter(Country == 'Mexico') %>% 
   lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.1574
 
+# Tabla de regresiones
+msummary(list("Regional"= reg_ipc_gasto,
+              "Chile"= lm1,
+              "Colombia"=lm2, 
+              "Costa Rica"= lm3, 
+              "México" = lm4), 
+         vcov = 'robust',
+         stars = c('*' = .1, '**' = .05, '***' = .01),
+         gof_map= modelsummary::gof_map %>%
+           filter(raw=="nobs"|raw=="r.squared"))
+           
 # En un gráfico veremos más a detalle el tema del COVID
 
 
