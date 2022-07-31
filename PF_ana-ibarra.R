@@ -132,15 +132,18 @@ clean_data %>% filter(Country == 'Mexico') %>%
 
 # Parte 3: Gráficos -------------------------------------------------------
 
-gasto_grf <- clean_data %>%
+clean_data %>%
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
   geom_line() + ggtitle("Gasto de los Paises OCDE en LATAM") +
-  geom_vline(xintercept = 2020)
+  geom_vline(xintercept = 2020) +
+  xlab("Año") + ylab("Gasto (Mil Millones de USD)")
 
 
 clean_data_pob %>%
   ggplot(aes(Ano, gastopc, color = Country)) + 
-  geom_line() + ggtitle("Gasto per Cápita Países OCDE LATAM")
+  geom_line() + ggtitle("Gasto per Cápita Países OCDE LATAM") +
+  geom_vline(xintercept = 2020) +
+  xlab("Año") + ylab("Gasto per Cápita")
 
 # Para Chile
 
@@ -148,8 +151,9 @@ clean_data %>%
   filter(Country == 'Chile') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist() + 
-  ggtitle("Resumen descriptivo Gasto-IPC en Chile") 
+  scatterHist(title= "Resumen descriptivo Gasto-IPC en Chile",
+              xlab = "IPC",
+              ylab = "Gasto (Mil Millones de USD)")
 
 clean_data %>%
   filter(Country == 'Chile') %>% 
@@ -158,9 +162,6 @@ clean_data %>%
   geom_vline(xintercept = 2009) + 
   xlab("Año") + ylab("Gasto (Mil Millones de USD)")
 
-pruebita = clean_data_pob %>%
-  filter(Country == 'Chile')
-
 
 # Para Colombia
 
@@ -168,8 +169,9 @@ clean_data %>%
   filter(Country == 'Colombia') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist() + 
-  ggtitle("Resumen descriptivo Gasto-IPC en Colombia")
+  scatterHist(title= "Resumen descriptivo Gasto-IPC en Colombia",
+              xlab = "IPC",
+              ylab = "Gasto (Mil Millones de USD)")
 
 clean_data %>%
   filter(Country == 'Colombia') %>% 
@@ -184,8 +186,9 @@ clean_data %>%
   filter(Country == 'Costa Rica') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist() + 
-  ggtitle("Resumen descriptivo Gasto-IPC en Costa Rica")
+  scatterHist(title= "Resumen descriptivo Gasto-IPC en Costa Rica",
+              xlab = "IPC",
+              ylab = "Gasto (Mil Millones de USD)")
 
 clean_data %>%
   filter(Country == 'Costa Rica') %>% 
@@ -201,8 +204,9 @@ clean_data %>%
   filter(Country == 'Mexico') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist() + 
-  ggtitle("Resumen descriptivo Gasto-IPC en México")
+  scatterHist(title= "Resumen descriptivo Gasto-IPC en México",
+              xlab = "IPC",
+              ylab = "Gasto (Mil Millones de USD)")  
 
 clean_data %>%
   filter(Country == 'Mexico') %>% 
