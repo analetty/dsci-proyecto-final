@@ -141,7 +141,8 @@ clean_data %>%
   filter(Country == 'Chile') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist()
+  scatterHist() + 
+  ggtitle("Comportamiento del Gasto en Chile")
 
 clean_data %>%
   filter(Country == 'Chile') %>% 
@@ -155,16 +156,27 @@ clean_data %>%
   filter(Country == 'Colombia') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist()
+  scatterHist() #grafico con resumen descriptivo para Colombia
 
-
+clean_data %>%
+  filter(Country == 'Mexico') %>% 
+  ggplot(aes(Ano, gasto_dolares, color = Country)) + 
+  geom_line() + ggtitle("Gasto Chile") +
+  geom_vline(xintercept = 1994) 
+  
 # Para Costa Rica
 
 clean_data %>% 
   filter(Country == 'Costa Rica') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist()
+  scatterHist() #grafico con resumen descriptivo para Costa Rica
+
+clean_data %>%
+  filter(Country == 'Mexico') %>% 
+  ggplot(aes(Ano, gasto_dolares, color = Country)) + 
+  geom_line() + ggtitle("Gasto Chile") +
+  geom_vline(xintercept = 1994) 
 
 # Para Mexico
 
@@ -172,13 +184,13 @@ clean_data %>%
   filter(Country == 'Mexico') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist
+  scatterHist #grafico con resumen descriptivo para Mexico
 
 clean_data %>%
   filter(Country == 'Mexico') %>% 
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
   geom_line() + ggtitle("Gasto Chile") +
-  geom_vline(xintercept = 1994)
+  geom_vline(xintercept = 1994) 
 
 # Mapa  -------------------------------------------------------------------
 data(World)
