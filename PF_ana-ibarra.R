@@ -21,6 +21,7 @@ library(patchwork)
 library(tmap)
 library(sf)  
 library(scales)
+library(modelsummary)
 
 
 # Parte 1: Importar datos -------------------------------------------------
