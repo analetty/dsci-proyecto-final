@@ -18,7 +18,8 @@ library(dplyr)
 library(readxl)
 library(psych)
 library(patchwork)
-
+library(tmap)
+library(sf)  
 
 # Parte 1: Importar datos -------------------------------------------------
 
@@ -157,3 +158,29 @@ rownames(scatter_mx) <-scatter_mx$Ano
 
 scatterHist(scatter_mx[c("gasto_dolares", "ipc")])
 
+# Mapa  -------------------------------------------------------------------
+data(World)
+
+dataWorld <- World %>% 
+  mutate(Country = sovereignt) %>% 
+  filter(continent == "South America" | continent == "North America") %>% 
+  filter(!(Country %in% c("United States of America", "Canada", "Denmark"))) %>% 
+  select(Country, geometry)  
+
+a1 <- clean_data %>% 
+  filter(Ano == 1990) %>% 
+  mutate(gastopc = gasto_dolares / poblacion)
+
+plotuno <- left_join(dataWorld, a1) 
+
+
+
+tmap_mode("plot") 
+
+  tm_shape(plotuno) +
+  tm_borders(alpha = 0.4) + 
+  tm_polygons("gastopc", style = 'quantile', n=5,
+              title = "Gasto pc en USD", colorNA = NULL) +
+  tm_layout(main.title = "Gasto per cápita en 1990",
+            main.title.position = "center",
+            main.title.size = 1)
