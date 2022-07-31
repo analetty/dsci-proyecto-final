@@ -20,6 +20,7 @@ library(psych)
 library(patchwork)
 library(tmap)
 library(sf)  
+library(scales)
 
 
 # Parte 1: Importar datos -------------------------------------------------
@@ -74,11 +75,11 @@ clean_data_pob <- data.frame(Country = factor(),
                        poblacion = numeric(),
                        gasto_ml =numeric(),
                        gasto_dolares =numeric(),
-                       tasa = numeric())
+                       tasa_crecpob = numeric())
 
 for(i in seq_along(levels(clean_data$Country))){
   tasa_pob_pais <- clean_data %>% filter(Country %in% c(levels(Country)[i])) %>% 
-    mutate(tasa = (poblacion/lag(poblacion))-1)
+    mutate(tasa_crecpob = (poblacion/lag(poblacion))-1)
   
   clean_data_pob <-bind_rows(clean_data_pob, tasa_pob_pais)
 }
@@ -131,7 +132,8 @@ clean_data %>% filter(Country == 'Mexico') %>%
 
 gasto_grf <- clean_data %>%
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
-  geom_line() + ggtitle("Gasto de los Paises OCDE en LATAM")
+  geom_line() + ggtitle("Gasto de los Paises OCDE en LATAM") +
+  geom_vline(xintercept = 2020)
 
 # Para Chile
 
@@ -140,6 +142,12 @@ clean_data %>%
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
   scatterHist()
+
+clean_data %>%
+  filter(Country == 'Chile') %>% 
+  ggplot(aes(Ano, gasto_dolares, color = Country)) + 
+  geom_line() + ggtitle("Gasto Mexico") +
+  geom_vline(xintercept = 2009)
 
 # Para Colombia
 
@@ -164,7 +172,13 @@ clean_data %>%
   filter(Country == 'Mexico') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist()
+  scatterHist
+
+clean_data %>%
+  filter(Country == 'Mexico') %>% 
+  ggplot(aes(Ano, gasto_dolares, color = Country)) + 
+  geom_line() + ggtitle("Gasto Chile") +
+  geom_vline(xintercept = 1994)
 
 # Mapa  -------------------------------------------------------------------
 data(World)
