@@ -21,17 +21,13 @@ library(patchwork)
 library(tmap)
 library(sf)  
 
+
 # Parte 1: Importar datos -------------------------------------------------
 
 # Cambiamos al directorio donde tenemos los datasets
 
 getwd()
-#setwd('..')
-#setwd("prueba2/dsci-prueba2/datasets") #Directorio donde tenemos el archivo
-
 # Importamos los datasets a usar
-
-#setwd('DSci-ALIL/proyecto/dsci-proyecto-final/datasets')
 
 raw_data <- read_excel("WEO_Data.xlsx")
 
@@ -70,6 +66,23 @@ clean_data <- pivot_wider(data1,names_from='descriptor', values_from='obs') %>%
          ipc = ipc/10^3)  %>%
   mutate(gasto_dolares = gasto_ml/ppp)  
 
+
+clean_data_pob <- data.frame(Country = factor(),
+                       Ano = double(),
+                       ppp = numeric(),
+                       ipc = numeric(),
+                       poblacion = numeric(),
+                       gasto_ml =numeric(),
+                       gasto_dolares =numeric(),
+                       tasa = numeric())
+
+for(i in seq_along(levels(clean_data$Country))){
+  tasa_pob_pais <- clean_data %>% filter(Country %in% c(levels(Country)[i])) %>% 
+    mutate(tasa = (poblacion/lag(poblacion))-1)
+  
+  clean_data_pob <-bind_rows(clean_data_pob, tasa_pob_pais)
+}
+
 # Parte 2: Análisis -------------------------------------------------------
 
 # Regresión mínimos cuadrados ordinarios
@@ -78,38 +91,36 @@ clean_data <- pivot_wider(data1,names_from='descriptor', values_from='obs') %>%
 
 reg_ipc_gasto <- lm(ipc~gasto_dolares, clean_data)
 
-sum(reg_ipc_gasto$coefficients)
-
-
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.06546
 
 # Para Chile
-cd_chile <- clean_data %>% filter(Country == 'Chile')
-reg_ipc_gasto_cl <- lm(ipc~gasto_dolares, cd_chile)
+clean_data %>% filter(Country == 'Chile') %>% 
+  lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.5658
 
 
 # Para Colombia
-cd_colombia <- clean_data %>% filter(Country == 'Colombia')
-reg_ipc_gasto_col <- lm(ipc~gasto_dolares, cd_colombia)
+
+clean_data %>% filter(Country == 'Colombia') %>% 
+  lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.3984
 
 
 
 # Para Costa Rica
-cd_costa_rica <- clean_data %>% filter(Country == 'Costa Rica')
-reg_ipc_gasto_cr <- lm(ipc~gasto_dolares, cd_costa_rica)
+
+clean_data %>% filter(Country == 'Costa Rica') %>% 
+  lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 4.674
 # IPC más sensible al gasto
 
 
 # Para Mexico
-
-cd_mexico <- clean_data %>% filter(Country == 'Mexico')
-reg_ipc_gasto_mex <- lm(ipc~gasto_dolares, cd_mexico)
+clean_data %>% filter(Country == 'Mexico') %>% 
+  lm(ipc~gasto_dolares, data =.)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.1574
 
@@ -117,9 +128,6 @@ reg_ipc_gasto_mex <- lm(ipc~gasto_dolares, cd_mexico)
 
 
 # Parte 3: Gráficos -------------------------------------------------------
-# clean_data %>%
-#   ggplot(aes(Ano, gasto_dolares, color = as.factor(Country), group = 1)) + 
-#   geom_line() + ggtitle("Gasto (%PIB) de los Paises OCDE en LATAM")
 
 gasto_grf <- clean_data %>%
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
@@ -127,39 +135,36 @@ gasto_grf <- clean_data %>%
 
 # Para Chile
 
-scatter_cl <-clean_data %>% 
-  filter(Country == 'Chile')
-
-rownames(scatter_cl) <-scatter_cl$Ano
-
-scatterHist(scatter_cl[c("gasto_dolares", "ipc")])
+clean_data %>% 
+  filter(Country == 'Chile') %>% 
+  `rownames<-`(.$Ano) %>% 
+  select(gasto_dolares, ipc) %>% 
+  scatterHist()
 
 # Para Colombia
 
-scatter_col <-clean_data %>% 
-  filter(Country == 'Colombia')
+clean_data %>% 
+  filter(Country == 'Colombia') %>% 
+  `rownames<-`(.$Ano) %>% 
+  select(gasto_dolares, ipc) %>% 
+  scatterHist()
 
-rownames(scatter_col) <-scatter_col$Ano
-
-scatterHist(scatter_col[c("gasto_dolares", "ipc")])
 
 # Para Costa Rica
 
-scatter_cr <-clean_data %>% 
-  filter(Country == 'Costa Rica')
-
-rownames(scatter_cr) <-scatter_cr$Ano
-
-scatterHist(scatter_cr[c("gasto_dolares", "ipc")])
+clean_data %>% 
+  filter(Country == 'Costa Rica') %>% 
+  `rownames<-`(.$Ano) %>% 
+  select(gasto_dolares, ipc) %>% 
+  scatterHist()
 
 # Para Mexico
 
-scatter_mx <-clean_data %>% 
-  filter(Country == 'Mexico')
-
-rownames(scatter_mx) <-scatter_mx$Ano
-
-scatterHist(scatter_mx[c("gasto_dolares", "ipc")])
+clean_data %>% 
+  filter(Country == 'Mexico') %>% 
+  `rownames<-`(.$Ano) %>% 
+  select(gasto_dolares, ipc) %>% 
+  scatterHist()
 
 # Mapa  -------------------------------------------------------------------
 data(World)
