@@ -54,6 +54,7 @@ Estaremos analizando las siguientes variables de los países Colombia, Chile, Co
 - Tasa implícita del PPA.
 
 
+
 ## Metodología
 
 Previo al análisis de los datos, se debe realizar una transformación de los mismos. La misma consistirá en la limpieza y recopilación de los datos en una tabla unificada, así como cálculos adicionales de indicadores que permitirán realizar un análisis preciso. Asimismo, el proceso de limpieza de datos permitirá transformar los valores a ser evaluados, omitiendo aquellas observaciones que no sean de utilidad para las variables definidas.. Uno de los cálculos más importantes que realizaremos dentro de la transformación de los datos es el del  gasto público por país en dólares americanos, con el fin de estandarizar los valores entre países. De igual manera, se realizará el cálculo del gasto público per cápita por cada país, para así poder determinar la proporción del gasto destinado a cada habitante. 
