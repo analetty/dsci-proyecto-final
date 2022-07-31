@@ -142,13 +142,14 @@ clean_data %>%
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
   scatterHist() + 
-  ggtitle("Comportamiento del Gasto en Chile")
+  ggtitle("Resumen descriptivo Gasto-IPC en Chile") 
 
 clean_data %>%
   filter(Country == 'Chile') %>% 
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
-  geom_line() + ggtitle("Gasto Mexico") +
-  geom_vline(xintercept = 2009)
+  geom_line() + ggtitle("Comportamiento del Gasto en Chile") +
+  geom_vline(xintercept = 2009) + 
+  xlab("Año") + ylab("Gasto (Mil Millones de USD)")
 
 # Para Colombia
 
@@ -156,27 +157,32 @@ clean_data %>%
   filter(Country == 'Colombia') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist() #grafico con resumen descriptivo para Colombia
+  scatterHist() + 
+  ggtitle("Resumen descriptivo Gasto-IPC en Colombia")
 
 clean_data %>%
-  filter(Country == 'Mexico') %>% 
+  filter(Country == 'Colombia') %>% 
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
-  geom_line() + ggtitle("Gasto Chile") +
-  geom_vline(xintercept = 1994) 
-  
+  geom_line() + ggtitle("Comportamiento del Gasto en Colombia") +
+  geom_vline(xintercept = 2013) + 
+  xlab("Año") + ylab("Gasto (Mil Millones de USD)") + labs(caption = "Nota: el año corresponde a la aprobación de la adhesion y hoja de ruta")
+
 # Para Costa Rica
 
 clean_data %>% 
   filter(Country == 'Costa Rica') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist() #grafico con resumen descriptivo para Costa Rica
+  scatterHist() + 
+  ggtitle("Resumen descriptivo Gasto-IPC en Costa Rica")
 
 clean_data %>%
-  filter(Country == 'Mexico') %>% 
+  filter(Country == 'Costa Rica') %>% 
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
-  geom_line() + ggtitle("Gasto Chile") +
-  geom_vline(xintercept = 1994) 
+  geom_line() + ggtitle("Comportamiento del Gasto en Costa Rica") +
+  geom_vline(xintercept = 2015) + 
+  xlab("Año") + ylab("Gasto (Mil Millones de USD)") + labs(caption = "Nota: el año corresponde a la aprobación de la adhesion y hoja de ruta")
+
 
 # Para Mexico
 
@@ -184,13 +190,15 @@ clean_data %>%
   filter(Country == 'Mexico') %>% 
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
-  scatterHist #grafico con resumen descriptivo para Mexico
+  scatterHist() + 
+  ggtitle("Resumen descriptivo Gasto-IPC en México")
 
 clean_data %>%
   filter(Country == 'Mexico') %>% 
   ggplot(aes(Ano, gasto_dolares, color = Country)) + 
-  geom_line() + ggtitle("Gasto Chile") +
-  geom_vline(xintercept = 1994) 
+  geom_line() + ggtitle("Comportamiento del Gasto en Mexico") +
+  geom_vline(xintercept = 1994) + 
+  xlab("Año") + ylab("Gasto (Mil Millones de USD)")
 
 # Mapa  -------------------------------------------------------------------
 data(World)
