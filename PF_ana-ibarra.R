@@ -94,6 +94,7 @@ for(i in seq_along(levels(clean_data$Country))){
 # Se desea conocer cómo el gasto explica el ipc
 
 reg_ipc_gasto <- lm(ipc~gasto_dolares, clean_data)
+reg_ipc_gastopc <- lm(ipc ~ gastopc, clean_data_pob)
 
 # Un incremento de 1 unidad (mil millones de dolares) implica un aumento del ipc del 0.06546
 
