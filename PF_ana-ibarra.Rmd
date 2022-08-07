@@ -463,6 +463,16 @@ msummary(list("Regional"= reg_ipc_gasto,
          stars = c('*' = .1, '**' = .05, '***' = .01),
          gof_map= modelsummary::gof_map %>%
            filter(raw=="nobs"|raw=="r.squared"))
+
+msummary(list("Regional"= reg_ipc_gastopc,
+              "Chile"= lm1pc,
+              "Colombia"=lm2pc, 
+              "Costa Rica"= lm3pc, 
+              "México" = lm4pc), 
+         vcov = 'robust',
+         stars = c('*' = .1, '**' = .05, '***' = .01),
+         gof_map= modelsummary::gof_map %>%
+           filter(raw=="nobs"|raw=="r.squared"))
 ```
 
 ## Enlaces de interés
