@@ -21,6 +21,10 @@ library(patchwork)
 library(tmap)
 library(sf)  
 library(scales)
+library(ggplot2)
+library(patchwork) # To display 2 charts together
+library(hrbrthemes)
+library(modelsummary)
 
 
 # Parte 1: Importar datos -------------------------------------------------
@@ -28,9 +32,10 @@ library(scales)
 # Cambiamos al directorio donde tenemos los datasets
 
 getwd()
+#setwd('proyecto/dsci-proyecto-final')
 # Importamos los datasets a usar
 
-raw_data <- read_excel("WEO_Data.xlsx")
+raw_data <- read_excel("datasets/WEO_Data.xlsx")
 
 
 raw_data <- raw_data[,c(1:2, 6:37)] %>% 
@@ -86,6 +91,9 @@ for(i in seq_along(levels(clean_data$Country))){
   clean_data_pob <-bind_rows(clean_data_pob, tasa_pob_pais)
 }
 
+# Exportamos las bases de datos a archivos .csv
+write.csv(clean_data_pob,"datasets/ocde_data.csv", row.names = FALSE)
+
 # Parte 2: Análisis -------------------------------------------------------
 
 # Regresión mínimos cuadrados ordinarios
@@ -138,6 +146,8 @@ msummary(list("Regional"= reg_ipc_gasto,
          gof_map= modelsummary::gof_map %>%
            filter(raw=="nobs"|raw=="r.squared"))
            
+# En un gráfico veremos más a detalle el tema del COVID
+
 # En un gráfico veremos más a detalle el tema del COVID
 
 
@@ -396,3 +406,61 @@ tmap_mode("plot")
               main.title.size = 3, 
               legend.show = F, 
               frame = F)
+  
+  
+  data <- data.frame(
+    day = as.Date("2019-01-01") + 0:99,
+    temperature = runif(100) + seq(1,100)^2.5 / 10000,
+    price = runif(100) + seq(100,1)^1.5 / 10
+  )
+  
+  
+  
+  # Value used to transform the data
+  coeff <- 10
+  
+  # A few constants
+  temperatureColor <- "#69b3a2"
+  priceColor <- rgb(0.2, 0.6, 0.9, 1)
+  
+  
+  prueba = clean_data_pob %>%
+    filter(Country == 'Mexico', !is.na(tasa_crecpob))
+  
+  prueba$y2scaled <- scales::rescale(prueba$tasa_crecpob, range(prueba$gastopc))
+  
+  prueba %>%
+    ggplot(aes(Ano)) + 
+    geom_line( aes(y=gastopc), size=1, color=priceColor) +
+    geom_bar(aes(y=y2scaled), stat="identity", size=.1, fill=temperatureColor, color="black", alpha=.4) + 
+    
+    ggtitle("Gasto per Cápita Países OCDE LATAM") + 
+    scale_y_continuous(
+      name = "Tasa Poblacion",
+      
+      sec.axis = sec_axis(~.*200000, name="Price ($)")
+    ) 
+    
+  clean_data_pob %>%
+    filter(Country == 'Mexico') %>% ggplot( aes(x=Ano)) +
+    
+    geom_bar( aes(y=tasa_crecpob), stat="identity", size=.1, fill=temperatureColor, color="black", alpha=.4) + 
+    geom_line( aes(y=gasto_dolares), size=2, color=priceColor) +
+    
+    scale_y_continuous(
+      
+      # Features of the first axis
+      name = "Temperature (Celsius °)",
+      
+      # Add a second axis and specify its features
+      sec.axis = sec_axis(~.*100, name="Price ($)")
+    ) + 
+    
+    theme_ipsum() +
+    
+    theme(
+      axis.title.y = element_text(color = temperatureColor, size=13),
+      axis.title.y.right = element_text(color = priceColor, size=13)
+    ) +
+    
+    ggtitle("Temperature down, price up")
