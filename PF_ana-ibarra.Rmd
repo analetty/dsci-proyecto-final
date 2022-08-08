@@ -148,8 +148,8 @@ clean_data %>%
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
   scatterHist(title= "Resumen descriptivo Gasto-IPC en Chile",
-              xlab = "IPC",
-              ylab = "Gasto (Mil Millones de USD)")
+              ylab = "IPC",
+              xlab = "Gasto (Mil Millones de USD)")
 
 
 
@@ -176,8 +176,8 @@ clean_data %>%
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
   scatterHist(title= "Resumen descriptivo Gasto-IPC en Colombia",
-              xlab = "IPC",
-              ylab = "Gasto (Mil Millones de USD)")
+              ylab = "IPC",
+              xlab = "Gasto (Mil Millones de USD)")
 
 ```
 
@@ -201,8 +201,8 @@ clean_data %>%
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
   scatterHist(title= "Resumen descriptivo Gasto-IPC en Costa Rica",
-              xlab = "IPC",
-              ylab = "Gasto (Mil Millones de USD)")
+              xlab = "Gasto (Mil Millones de USD)",
+              ylab = "IPC")
 
 ```
 
@@ -228,8 +228,8 @@ clean_data %>%
   `rownames<-`(.$Ano) %>% 
   select(gasto_dolares, ipc) %>% 
   scatterHist(title= "Resumen descriptivo Gasto-IPC en México",
-              xlab = "IPC",
-              ylab = "Gasto (Mil Millones de USD)")  
+              ylab = "IPC",
+              xlab = "Gasto (Mil Millones de USD)")  
 
 ```
 
